@@ -1,4 +1,5 @@
 class Character:
+    """ General Character class """
     def __init__(self, name, life, level) -> None:
         self.__name = name
         self.__life = life
@@ -15,6 +16,7 @@ class Character:
     
 
 class Hero(Character):
+    """ Hero character class """
     def __init__(self, name, life, level, hability) -> None:
         super().__init__(name, life, level)
         self.__hability = hability
@@ -26,6 +28,7 @@ class Hero(Character):
         return f"{super().exibit_details()}\n Hability: {self.get_hability()}"
 
 class Enemy(Character):
+    """ Enemy character class """
     def __init__(self, name, life, level, enemy_type) -> None:
         super().__init__(name, life, level)
         self.__enemy_type = enemy_type
@@ -36,7 +39,24 @@ class Enemy(Character):
     def exibit_details(self):
         return f"{super().exibit_details()}\nEnemy Type: {self.get_enemy_type()}"
 
-heroi = Hero("Hero", 100, 5, "Super Strength")
-print(heroi.exibit_details())
-enemy = Enemy("Bat", 50, 3, "fly")
-print(enemy.exibit_details())
+
+class Game:
+    """ Class for game management """
+    def __init__(self) -> None:
+        self.hero = Hero("Hero", 100, 5, "Super Strength")
+        self.enemy = Enemy("Bat", 50, 3, "fly")
+    
+    def start_batle(self):
+        """ management of turn based batle """
+        print("Starting Batle")
+        while self.hero.get_life() > 0 and self.enemy.get_life() > 0:
+            print("\nCharacter Details:")
+            print(self.hero.exibit_details())
+            print(self.enemy.exibit_details())
+
+            input("Pressione Enter para atacar...")
+            choice = input("Escolha (1 - Ataque Normal, 2 - Ataque Especial): ")
+
+#Creating Game 
+game = Game()
+game.start_batle()
