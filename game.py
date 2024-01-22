@@ -14,7 +14,15 @@ class Character:
     def exibit_details(self):
         return f"Name: {self.get_name()}\nLife: {self.get_life()}\nLevel: {self.get_level()}"
     
-
+    def recieve_damage(self, damage):
+        self.__life -= damage
+        if self.__life < 0:
+            self.__life = 0
+    def atack(self, target):
+        damage = self.__level * 2
+        target.recieve_damage(damage)
+        print(f"{self.get_name()} atacked {target.get_name()} and gave {damage} of damage")
+        
 class Hero(Character):
     """ Hero character class """
     def __init__(self, name, life, level, hability) -> None:
@@ -25,7 +33,12 @@ class Hero(Character):
         return self.__hability
     
     def exibit_details(self):
-        return f"{super().exibit_details()}\n Hability: {self.get_hability()}"
+        return f"{super().exibit_details()}\nHability: {self.get_hability()}"
+    
+    def special_atack(self, target):
+        damage = self.get_level() * 5
+        target.recieve_damage(damage)
+        print(f"{self.get_name()} use the special hability {self.get_hability()} on {target.get_name()} and did {damage} of damage")
 
 class Enemy(Character):
     """ Enemy character class """
@@ -54,8 +67,23 @@ class Game:
             print(self.hero.exibit_details())
             print(self.enemy.exibit_details())
 
-            input("Pressione Enter para atacar...")
-            choice = input("Escolha (1 - Ataque Normal, 2 - Ataque Especial): ")
+            input("Press Enter to atack...")
+            choice = input("Chose (1 - Normal atack, 2 - Special atack): ")
+            if choice == "1":
+                self.hero.atack(self.enemy)
+
+            elif choice == "2":
+                self.hero.special_atack(self.enemy)
+
+            else:
+                print("Invalid comand, choose again")    
+            if self.enemy.get_life() > 0:
+                self.enemy.atack(self.hero)
+
+        if self.hero.get_life() > 0:
+            print("\nCongratulations, you won the battle!!")
+        else:
+            print("\n You lose!")
 
 #Creating Game 
 game = Game()
