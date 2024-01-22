@@ -1,3 +1,5 @@
+import random
+
 class Character:
     """ General Character class """
     def __init__(self, name, life, level) -> None:
@@ -19,7 +21,7 @@ class Character:
         if self.__life < 0:
             self.__life = 0
     def atack(self, target):
-        damage = self.__level * 2
+        damage = random.randint(self.get_level() * 2, self.get_level() * 4)
         target.recieve_damage(damage)
         print(f"{self.get_name()} atacked {target.get_name()} and gave {damage} of damage")
         
@@ -36,7 +38,7 @@ class Hero(Character):
         return f"{super().exibit_details()}\nHability: {self.get_hability()}"
     
     def special_atack(self, target):
-        damage = self.get_level() * 5
+        damage = random.randint(self.get_level() * 5, self.get_level() * 8)
         target.recieve_damage(damage)
         print(f"{self.get_name()} use the special hability {self.get_hability()} on {target.get_name()} and did {damage} of damage")
 
@@ -51,7 +53,6 @@ class Enemy(Character):
     
     def exibit_details(self):
         return f"{super().exibit_details()}\nEnemy Type: {self.get_enemy_type()}"
-
 
 class Game:
     """ Class for game management """
